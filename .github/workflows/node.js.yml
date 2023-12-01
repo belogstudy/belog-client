@@ -1,0 +1,26 @@
+name: Deploy to S3
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 코드
+        uses: actions/checkout@v2
+
+      - name: Node.js 설치
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+
+      - name: 의존성 설치
+        run: |
+          npm install
+
+      - name: 빌드
+        run: npm run build
