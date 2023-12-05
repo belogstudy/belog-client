@@ -3,9 +3,17 @@
 import { AiOutlineClose } from 'react-icons/ai';
 import { AuthModal } from './AuthModal';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { stat } from 'fs';
+import { RootState } from '@/redux/store';
+import { authEmail } from '@/redux/features/auth.slices';
 
 export const SignUpModal = () => {
     const router = useRouter();
+
+    const dispatch = useDispatch();
+    const email = useSelector((state: RootState) => state.authReducer.email);
 
     const header = (
         <button
@@ -28,9 +36,11 @@ transition"
                 type="text"
                 placeholder="이메일을 입력하세요"
                 className="flex-grow border-2 border-velogauthgray-100 p-2 "
+                value={email}
+                onChange={(e) => dispatch(authEmail(e.target.value))}
             />
             <button
-                onClick={() => router.push('/auth/create')}
+                onClick={() => router.push(`/auth/create`)}
                 className="bg-velogauthgreen-100 text-white p-2"
             >
                 회원가입
