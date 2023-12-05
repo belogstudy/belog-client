@@ -1,16 +1,15 @@
+'use client';
+
 import { AiOutlineClose } from 'react-icons/ai';
 import { AuthModal } from './AuthModal';
+import { useRouter } from 'next/navigation';
 
 export const SignUpModal = () => {
-    const footer = (
-        <div className="flex justify-end items-center space-x-2">
-            <p className="text-velogauthgreen-100">계정이 이미 있으신가요?</p>
-            <p className="text-velogauthgreen-200 font-semibold">로그인 </p>
-        </div>
-    );
+    const router = useRouter();
 
     const header = (
         <button
+            onClick={() => alert('닫기')}
             className="
 p-1
 ml-auto
@@ -24,22 +23,25 @@ transition"
     );
 
     const body = (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-row items-center">
             <input
                 type="text"
                 placeholder="이메일을 입력하세요"
-                className="border-4 border-velogauthgray-100 p-2 rounded-lg"
+                className="flex-grow border-2 border-velogauthgray-100 p-2 "
             />
-            <input
-                type="password"
-                placeholder="비밀번호를 입력하세요"
-                className="border-4 border-velogauthgray-100 p-2 rounded-lg"
-            />
-            <input
-                type="text"
-                placeholder="닉네임을 입력하세요"
-                className="border-4 border-velogauthgray-100 p-2 rounded-lg"
-            />
+            <button
+                onClick={() => router.push('/auth/create')}
+                className="bg-velogauthgreen-100 text-white p-2"
+            >
+                회원가입
+            </button>
+        </div>
+    );
+
+    const footer = (
+        <div className="flex justify-end items-center space-x-2">
+            <p className="text-velogauthgreen-100">계정이 이미 있으신가요?</p>
+            <p className="text-velogauthgreen-200 font-semibold">로그인 </p>
         </div>
     );
 
@@ -47,7 +49,7 @@ transition"
         <>
             <div className="fixed inset-0 flex items-center justify-center transition-all duration-300 ease-in-out bg-white p-5 rounded-xl shadow-md">
                 <AuthModal
-                    title="회원 가입"
+                    title="회원가입"
                     header={header}
                     actionLabel="회원 가입"
                     body={body}
