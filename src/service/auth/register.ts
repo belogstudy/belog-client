@@ -1,10 +1,23 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 export const register = async (body: Object) => {
     try {
-        const res = await axios.post('https://belog.diligentp.com/register', body);
-        return res.data;
+        const res: AxiosResponse = await axios.post('https://belog.diligentp.com/register', body);
+        return res;
     } catch (error) {
-        console.log(error);
+        if (axios.isAxiosError(error) && error.response) {
+            throw error.response;
+        }
+    }
+};
+
+export const login = async (body: Object) => {
+    try {
+        const res: AxiosResponse = await axios.post('https://belog.diligentp.com/login', body);
+        return res;
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+            throw error.response;
+        }
     }
 };
