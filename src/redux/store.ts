@@ -1,10 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
-import todoReducer from "./features/todo.slices";
+import { auth } from './features/auth.slices';
+import { configureStore } from '@reduxjs/toolkit';
 
 export const store = configureStore({
-  reducer: {
-    todoReducer,
-  },
+    reducer: {
+        authReducer: auth.reducer,
+    },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
