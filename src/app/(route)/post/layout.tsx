@@ -17,7 +17,7 @@ export default function PostLayout({
   };
 
   return (
-    <div className="w-screen h-screen px-40">
+    <div className="w-screen h-screen px-40 overflow-auto">
       <div>
         <div className="flex text-2xl text-slate-950 p-5 justify-between">
           Belog
