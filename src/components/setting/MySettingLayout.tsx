@@ -6,6 +6,7 @@ interface MySettingLayoutProps {
     velogTitleEdit: React.ReactElement;
     emailEdit: React.ReactElement;
     acountDelete: React.ReactElement;
+    socialEdit: React.ReactElement;
 }
 
 export const MySettingLayout: React.FC<MySettingLayoutProps> = ({
@@ -13,6 +14,7 @@ export const MySettingLayout: React.FC<MySettingLayoutProps> = ({
     velogTitleEdit,
     emailEdit,
     acountDelete,
+    socialEdit,
 }) => {
     return (
         <>
@@ -26,7 +28,7 @@ export const MySettingLayout: React.FC<MySettingLayoutProps> = ({
                                     size={120}
                                     alt="사람"
                                 />
-                                <button className="bg-velogauthgreen-100 rounded text-base text-white p-1 hover:opacity-80">
+                                <button className="bg-velogauthgreen-100 rounded text-base px-3 text-white p-1 hover:opacity-80">
                                     이미지 업로드
                                 </button>
                                 <button className="bg-white text-velogauthgreen-100 text-base p-2 hover:opacity-80">
@@ -51,6 +53,17 @@ export const MySettingLayout: React.FC<MySettingLayoutProps> = ({
                         </div>
                         <p className="text-velogauthgray-300 text-sm ml-2 mt-1 border-b-velogauthgrey-100 border-b-2">
                             개인 페이지의 좌측 상단에 나타는 페이지 제목입니다
+                        </p>
+
+                        <div className="flex flex-row p-2 mt-2">
+                            <p className="font-semibold text-base mr-5">소셜정보</p>
+                            {/* 이 붜분 분리 */}
+                            <div className="flex flex-col">{socialEdit}</div>
+
+                            {/* 이 붜분 분리 */}
+                        </div>
+                        <p className="text-velogauthgray-300 text-sm ml-2 mt-1 border-b-velogauthgrey-100 border-b-2">
+                            포스트 및 블로그에서 보여지는 프로필에 공개되는 소셜 정보입니다.
                         </p>
 
                         <div className="flex flex-row p-2 mt-2">

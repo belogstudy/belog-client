@@ -3,13 +3,19 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { MdPeopleAlt } from 'react-icons/md';
-import { MySettingLayout } from '@/components/setting/mySettingLayout';
+import { MySettingLayout } from '@/components/setting/MySettingLayout';
+import { MdEmail } from 'react-icons/md';
+import { FaGithub } from 'react-icons/fa6';
+import { FaTwitter } from 'react-icons/fa';
+import { FaFacebookSquare } from 'react-icons/fa';
+import { MdHome } from 'react-icons/md';
 
 export default function mysetting() {
     const [nickEditOn, setNickEditOn] = useState(false);
     const [velogTitleEditOn, setVelogTitleEditOn] = useState(false);
     const [emailEditOn, setEmailEditOn] = useState(false);
     const [acountDeleteOn, setAccountDeleteOn] = useState(false);
+    const [socialEditOn, setSocialEditOn] = useState(false);
 
     const handleNickEdit = () => {
         setNickEditOn(true);
@@ -25,6 +31,10 @@ export default function mysetting() {
 
     const handleAccountDelete = () => {
         setAccountDeleteOn(true);
+    };
+
+    const handlesetSocialEdit = () => {
+        setSocialEditOn(true);
     };
 
     const nickEdit =
@@ -100,6 +110,78 @@ export default function mysetting() {
         </>
     );
 
+    const socialEdit =
+        socialEditOn == false ? (
+            <>
+                <button
+                    onClick={handlesetSocialEdit}
+                    className="ml-3 text-velogauthgreen-100 underline hover:opacity-80"
+                >
+                    정보 추가
+                </button>
+            </>
+        ) : (
+            <>
+                <div className="flex flex-row ml-2">
+                    <MdEmail
+                        className="mt-1 ml-3"
+                        size={18}
+                    />
+                    <input
+                        placeholder="이메일을 입력하세요"
+                        className="w-[420px] ml-2 mb-2 px-2 text-lg text-black border-velogauthgray-400 border rounded"
+                    />
+                </div>
+
+                <div className="flex flex-row ml-2">
+                    <FaGithub
+                        className="mt-1 ml-3"
+                        size={18}
+                    />
+
+                    <input
+                        placeholder="Github 계정을 입력하세요"
+                        className="w-9/12 ml-2 mb-2 px-2 text-lg text-black border-velogauthgray-400 border rounded"
+                    />
+                </div>
+
+                <div className="flex flex-row ml-2">
+                    <FaTwitter
+                        className="mt-1 ml-3"
+                        size={18}
+                    />
+                    <input
+                        placeholder="Twitter 계정을 입력하세요"
+                        className="w-9/12 ml-2 mb-2 px-2 text-lg text-black border-velogauthgray-400 border rounded"
+                    />
+                </div>
+
+                <div className="flex flex-row ml-2">
+                    <FaFacebookSquare
+                        className="mt-1 ml-3"
+                        size={18}
+                    />
+
+                    <input
+                        placeholder="https://www.facebook.com/ 계정을 입력하세요"
+                        className="w-[420px]  ml-2 mb-2 px-2 text-lg text-black border-velogauthgray-400 border rounded"
+                    />
+                </div>
+
+                <div className="flex flex-row ml-2">
+                    <MdHome
+                        className="mt-1 ml-3"
+                        size={18}
+                    />
+                    <input
+                        placeholder="홈페이지 주소를 입력하세요"
+                        className="w-9/12 ml-2 mb-2 px-2 text-lg text-black border-velogauthgray-400 border rounded"
+                    />
+                </div>
+                <button className="bg-velogauthgreen-100 ml-2 px-2 hover:opacity-80 rounded text-white">저장</button>
+            </>
+        );
+
     return (
         <>
             <MySettingLayout
@@ -107,6 +189,7 @@ export default function mysetting() {
                 nickEdit={nickEdit}
                 velogTitleEdit={velogTitleEdit}
                 acountDelete={acountDelete}
+                socialEdit={socialEdit}
             />
         </>
     );
