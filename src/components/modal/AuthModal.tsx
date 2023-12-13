@@ -45,7 +45,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         fixed 
         inset-0 z-50 outline-none focus:outline-none"
                 >
-                    <div className="relative w-full lg:w-4/6 my-6 mx-auto lg:max-w-2xl h-full lg:h-3/6 flex rounded-lg shadow-lg bg-white">
+                    <div className="relative w-full lg:w-4/6 my-6 mx-auto lg:max-w-2xl h-full lg:h-4/6 flex rounded-lg shadow-lg bg-white">
                         {/* 좌측 웰컴 */}
                         <div className="flex flex-col items-center justify-center p-10 bg-velogauthgray-100">
                             <Image
