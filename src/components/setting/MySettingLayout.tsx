@@ -17,8 +17,8 @@ export const MySettingLayout: React.FC<MySettingLayoutProps> = ({
     return (
         <>
             <div className="flex items-center justify-center bg-white">
-                <div className="flex flex-col items-start justify-center p-10">
-                    <div className="flex flex-col">
+                <div className="flex-col items-center justify-center p-10 w-[768px]">
+                    <div className="flex items-start flex-col">
                         <div className="flex justify-center">
                             <div className="flex-col flex items-center justify-center">
                                 <MdPeopleAlt

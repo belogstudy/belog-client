@@ -42,11 +42,11 @@ export default function mysetting() {
         ) : (
             <div className="flex flex-col">
                 <input
-                    className="placeholder-black py-1 px-2 font-semibold text-2xl text-black mb-2 border-velogauthgray-400 border-2 rounded"
+                    className=" placeholder-black w-[520px] py-1 px-2 font-medium text-xl text-black mb-2 border-velogauthgray-400 border rounded"
                     placeholder="닉네임"
                 />
                 <input
-                    className="placeholder-black py-1 px-2 text-xl text-black mb-2 border-velogauthgray-400 border-2 rounded"
+                    className="placeholder-black font-extralight px-2 text-lg text-black mb-2 border-velogauthgray-400 border rounded"
                     placeholder="소개말"
                 />
                 <button className="rounded mt-2 ml-auto text-base px-4 py-1 text-white bg-velogauthgreen-100 hover:opacity-80">
@@ -68,7 +68,7 @@ export default function mysetting() {
             </>
         ) : (
             <>
-                <input className="placeholder-black px-2 text-lg text-black border-velogauthgray-400 border-2 rounded" />
+                <input className="placeholder-black w-9/12 px-2 text-lg text-black border-velogauthgray-400 border rounded" />
                 <button className="bg-velogauthgreen-100 px-2 ml-auto hover:opacity-80 rounded text-white">저장</button>
             </>
         );
@@ -86,7 +86,7 @@ export default function mysetting() {
             </>
         ) : (
             <>
-                <input className="placeholder-black px-2 text-lg text-black border-velogauthgray-400 border-2 rounded" />
+                <input className="placeholder-black w-9/12 px-2 text-lg text-black border-velogauthgray-400 border rounded" />
                 <button className="bg-velogauthgreen-100 px-2 ml-auto hover:opacity-80 rounded text-white">저장</button>
             </>
         );
