@@ -178,7 +178,11 @@ export default function mysetting() {
                         className="w-9/12 ml-2 mb-2 px-2 text-lg text-black border-velogauthgray-400 border rounded"
                     />
                 </div>
-                <button className="bg-velogauthgreen-100 ml-2 px-2 hover:opacity-80 rounded text-white">저장</button>
+                <div className="flex justify-end">
+                    <button className="bg-velogauthgreen-100 ml-2 px-2 hover:opacity-80 rounded text-white">
+                        저장
+                    </button>
+                </div>
             </>
         );
 
