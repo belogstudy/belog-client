@@ -2,6 +2,8 @@ import React from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import Welcome from '../../../public/images/auth/welcome.svg';
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 interface AuthModalProps {
     isOpen?: boolean;
@@ -28,7 +30,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     disabled,
     header,
 }) => {
-    if (!isOpen) return null;
+    const checkLogined = useSelector((state: RootState) => state.authReducer.isLogined);
+
+    // 로그인 상태시 모달이 열리지 않도록 추가
+    if (!isOpen || checkLogined) return null;
 
     return (
         <>

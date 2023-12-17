@@ -7,10 +7,11 @@ import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { stat } from 'fs';
 import { RootState } from '@/redux/store';
-import { isloginModalOpen, authEmail, isLogined, issignupModalOpen } from '@/redux/features/auth.slices';
+import { isloginModalOpen, authEmail, isLogined, issignupModalOpen, auth } from '@/redux/features/auth.slices';
 import { login } from '@/service/auth/register';
 import { AxiosError } from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import { useLoginModal, useSignupModal } from '@/hooks/UseAuthModal';
 
 export const LoginModal = () => {
     const router = useRouter();
@@ -19,21 +20,21 @@ export const LoginModal = () => {
 
     const checkLogined = useSelector((state: RootState) => state.authReducer.isLogined);
 
-    const isOpenLoginModal = useSelector((state: RootState) => state.authReducer.isloginModalOpen);
+    const authLoginmodal = useLoginModal();
 
-    const isOpenRegisterModal = useSelector((state: RootState) => state.authReducer.issignupModalOpen);
+    const authSignupmodal = useSignupModal();
 
     const authToggle = useCallback(() => {
         if (checkLogined == true) {
             return;
         }
-        dispatch(issignupModalOpen(true));
-        dispatch(isloginModalOpen(false));
-    }, [checkLogined, isOpenRegisterModal, isOpenLoginModal]);
+        authSignupmodal.open();
+        authLoginmodal.close();
+    }, [checkLogined, authSignupmodal.check, authLoginmodal.check]);
 
     const header = (
         <button
-            onClick={() => dispatch(isloginModalOpen(false))}
+            onClick={() => authLoginmodal.close()}
             className="
 p-1
 ml-auto
@@ -54,13 +55,12 @@ transition"
             if (res?.status === 200) {
                 toast.success('로그인이 완료되었습니다');
                 console.log(res);
+                dispatch(isLogined(true));
+                authLoginmodal.close();
+                router.push('/');
             }
         } catch (error: any) {
-            toast.error(error.data.errorMessage);
-        } finally {
-            dispatch(isLogined(true));
-            dispatch(isloginModalOpen(false));
-            router.push('/');
+            toast.error(error.data.message);
         }
     };
 
@@ -116,7 +116,7 @@ transition"
                 body={body}
                 footer={footer}
                 subtitle="이메일로 로그인"
-                isOpen={isOpenLoginModal}
+                isOpen={authLoginmodal.check}
             />
         </>
     );
