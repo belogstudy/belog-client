@@ -7,7 +7,7 @@ import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { stat } from 'fs';
 import { RootState } from '@/redux/store';
-import { isloginModalOpen, authEmail, isLogined, issignupModalOpen, auth } from '@/redux/features/auth.slices';
+import { isLogined, userId } from '@/redux/features/auth.slices';
 import { login } from '@/service/auth/register';
 import { AxiosError } from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
@@ -19,6 +19,8 @@ export const LoginModal = () => {
     const dispatch = useDispatch();
 
     const checkLogined = useSelector((state: RootState) => state.authReducer.isLogined);
+
+    const authUserId = useSelector((state: RootState) => state.authReducer.userId);
 
     const authLoginmodal = useLoginModal();
 
@@ -53,11 +55,13 @@ transition"
         try {
             const res = await login(body);
             if (res?.status === 200) {
+                dispatch(isLogined(true));
+                dispatch(userId(res.data.userId));
+
                 toast.success('로그인이 완료되었습니다');
                 console.log(res);
-                dispatch(isLogined(true));
                 authLoginmodal.close();
-                router.push('/');
+                // router.push('/');
             }
         } catch (error: any) {
             toast.error(error.data.message);
@@ -69,7 +73,7 @@ transition"
 
     const body = (
         <div className="flex flex-row items-center">
-            <div className="flex flex-col mr-10">
+            <div className="flex flex-col w-9/12">
                 <input
                     type="text"
                     placeholder="이메일을 입력하세요"
@@ -87,7 +91,7 @@ transition"
             </div>
             <button
                 onClick={handleLogin}
-                className=" bg-velogauthgreen-100 text-white p-2 hover:opacity-80 transition"
+                className=" bg-velogauthgreen-100 text-white p-2 hover:opacity-80 transition ml-auto"
             >
                 로그인
             </button>
