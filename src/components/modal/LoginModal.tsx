@@ -7,10 +7,11 @@ import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { stat } from 'fs';
 import { RootState } from '@/redux/store';
-import { isloginModalOpen, authEmail, isLogined, issignupModalOpen } from '@/redux/features/auth.slices';
+import { isLogined, userId } from '@/redux/features/auth.slices';
 import { login } from '@/service/auth/register';
 import { AxiosError } from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import { useLoginModal, useSignupModal } from '@/hooks/UseAuthModal';
 
 export const LoginModal = () => {
     const router = useRouter();
@@ -19,21 +20,23 @@ export const LoginModal = () => {
 
     const checkLogined = useSelector((state: RootState) => state.authReducer.isLogined);
 
-    const isOpenLoginModal = useSelector((state: RootState) => state.authReducer.isloginModalOpen);
+    const authUserId = useSelector((state: RootState) => state.authReducer.userId);
 
-    const isOpenRegisterModal = useSelector((state: RootState) => state.authReducer.issignupModalOpen);
+    const authLoginmodal = useLoginModal();
+
+    const authSignupmodal = useSignupModal();
 
     const authToggle = useCallback(() => {
         if (checkLogined == true) {
             return;
         }
-        dispatch(issignupModalOpen(true));
-        dispatch(isloginModalOpen(false));
-    }, [checkLogined, isOpenRegisterModal, isOpenLoginModal]);
+        authSignupmodal.open();
+        authLoginmodal.close();
+    }, [checkLogined, authSignupmodal.check, authLoginmodal.check]);
 
     const header = (
         <button
-            onClick={() => dispatch(isloginModalOpen(false))}
+            onClick={() => authLoginmodal.close()}
             className="
 p-1
 ml-auto
@@ -52,15 +55,16 @@ transition"
         try {
             const res = await login(body);
             if (res?.status === 200) {
+                dispatch(isLogined(true));
+                dispatch(userId(res.data.userId));
+
                 toast.success('로그인이 완료되었습니다');
                 console.log(res);
+                authLoginmodal.close();
+                // router.push('/');
             }
         } catch (error: any) {
-            toast.error(error.data.errorMessage);
-        } finally {
-            dispatch(isLogined(true));
-            dispatch(isloginModalOpen(false));
-            router.push('/');
+            toast.error(error.data.message);
         }
     };
 
@@ -69,7 +73,7 @@ transition"
 
     const body = (
         <div className="flex flex-row items-center">
-            <div className="flex flex-col mr-10">
+            <div className="flex flex-col w-9/12">
                 <input
                     type="text"
                     placeholder="이메일을 입력하세요"
@@ -87,7 +91,7 @@ transition"
             </div>
             <button
                 onClick={handleLogin}
-                className=" bg-velogauthgreen-100 text-white p-2 hover:opacity-80 transition"
+                className=" bg-velogauthgreen-100 text-white p-2 hover:opacity-80 transition ml-auto"
             >
                 로그인
             </button>
@@ -116,7 +120,7 @@ transition"
                 body={body}
                 footer={footer}
                 subtitle="이메일로 로그인"
-                isOpen={isOpenLoginModal}
+                isOpen={authLoginmodal.check}
             />
         </>
     );

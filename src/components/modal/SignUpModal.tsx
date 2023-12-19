@@ -7,7 +7,8 @@ import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { stat } from 'fs';
 import { RootState } from '@/redux/store';
-import { isloginModalOpen, authEmail, isLogined, issignupModalOpen } from '@/redux/features/auth.slices';
+import { authEmail } from '@/redux/features/auth.slices';
+import { useLoginModal, useSignupModal } from '@/hooks/UseAuthModal';
 
 export const SignUpModal = () => {
     const router = useRouter();
@@ -17,21 +18,21 @@ export const SignUpModal = () => {
 
     const checkLogined = useSelector((state: RootState) => state.authReducer.isLogined);
 
-    const isOpenLoginModal = useSelector((state: RootState) => state.authReducer.isloginModalOpen);
+    const authLoginmodal = useLoginModal();
 
-    const isOpenRegisterModal = useSelector((state: RootState) => state.authReducer.issignupModalOpen);
+    const authSignupmodal = useSignupModal();
 
     const authToggle = useCallback(() => {
         if (checkLogined == true) {
             return;
         }
-        dispatch(issignupModalOpen(false));
-        dispatch(isloginModalOpen(true));
-    }, [checkLogined, isOpenRegisterModal, isOpenLoginModal]);
+        authSignupmodal.close();
+        authLoginmodal.open();
+    }, [checkLogined, authSignupmodal.check, authLoginmodal.check]);
 
     const header = (
         <button
-            onClick={() => dispatch(issignupModalOpen(false))}
+            onClick={() => authSignupmodal.close()}
             className="
 p-1
 ml-auto
@@ -83,7 +84,7 @@ transition"
                 body={body}
                 footer={footer}
                 subtitle="이메일로 회원가입"
-                isOpen={isOpenRegisterModal}
+                isOpen={authSignupmodal.check}
             />
         </>
     );

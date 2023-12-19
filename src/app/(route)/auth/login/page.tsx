@@ -7,9 +7,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SignUpModal } from '@/components/modal/SignUpModal';
 import { LoginModal } from '@/components/modal/LoginModal';
 import { Toaster } from 'react-hot-toast';
+import { useLoginModal, useSignupModal } from '@/hooks/UseAuthModal';
 
 export default function Login() {
     const dispatch = useDispatch();
+
+    const authLoginmodal = useLoginModal();
+
+    const authSignupmodal = useSignupModal();
 
     const checkLogined = useSelector((state: RootState) => state.authReducer.isLogined);
 
@@ -23,7 +28,7 @@ export default function Login() {
         if (checkLogined == true) {
             return;
         }
-        dispatch(isloginModalOpen(true));
+        authLoginmodal.open();
     }, [checkLogined, isOpenLoginModal]);
     return (
         <div>

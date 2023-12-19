@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 
 export const register = async (body: Object) => {
     try {
-        const res: AxiosResponse = await axios.post('https://belog.diligentp.com/register', body);
+        const res: AxiosResponse = await axios.post('https://belog.diligentp.com/auth/register', body);
         return res;
     } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
@@ -13,7 +13,7 @@ export const register = async (body: Object) => {
 
 export const login = async (body: Object) => {
     try {
-        const res: AxiosResponse = await axios.post('https://belog.diligentp.com/login', body);
+        const res: AxiosResponse = await axios.post('https://belog.diligentp.com/auth/login', body);
         return res;
     } catch (error) {
         if (axios.isAxiosError(error) && error.response) {

@@ -8,6 +8,7 @@ import { Root } from 'postcss';
 import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLoginModal, useSignupModal } from '@/hooks/UseAuthModal';
 
 export default function Create() {
     const router = useRouter();
@@ -16,6 +17,10 @@ export default function Create() {
     const email = useSelector((state: RootState) => state.authReducer.email);
 
     const checkModal = useSelector((state: RootState) => state.authReducer.isloginModalOpen);
+
+    const authLoginmodal = useLoginModal();
+
+    const authSignupmodal = useSignupModal();
 
     const [pActive, setPActive] = useState('');
 
@@ -30,13 +35,13 @@ export default function Create() {
             const res = await register(body);
             if (res?.status === 200) {
                 toast.success('회원가입이 완료되었습니다');
-                dispatch(isloginModalOpen(true));
-                dispatch(issignupModalOpen(false));
+                authLoginmodal.open();
+                authSignupmodal.close();
                 router.push('/');
             }
         } catch (error: any) {
             console.log(error);
-            toast.error(error.data.errorMessage);
+            toast.error(error.data.message);
         }
     };
 

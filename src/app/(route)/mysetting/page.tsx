@@ -129,7 +129,7 @@ export default function mysetting() {
                     />
                     <input
                         placeholder="이메일을 입력하세요"
-                        className="w-[420px] ml-2 mb-2 px-2 text-lg text-black border-velogauthgray-400 border rounded"
+                        className="w-[420px] ml-2 mb-2 px-2 py-1 text-lg text-black border-velogauthgray-400 border rounded"
                     />
                 </div>
 
@@ -141,7 +141,7 @@ export default function mysetting() {
 
                     <input
                         placeholder="Github 계정을 입력하세요"
-                        className="w-9/12 ml-2 mb-2 px-2 text-lg text-black border-velogauthgray-400 border rounded"
+                        className="w-9/12 ml-2 mb-2 px-2 py-1 text-lg text-black border-velogauthgray-400 border rounded"
                     />
                 </div>
 
@@ -152,7 +152,7 @@ export default function mysetting() {
                     />
                     <input
                         placeholder="Twitter 계정을 입력하세요"
-                        className="w-9/12 ml-2 mb-2 px-2 text-lg text-black border-velogauthgray-400 border rounded"
+                        className="w-9/12 ml-2 mb-2 px-2 py-1 text-lg text-black border-velogauthgray-400 border rounded"
                     />
                 </div>
 
@@ -164,7 +164,7 @@ export default function mysetting() {
 
                     <input
                         placeholder="https://www.facebook.com/ 계정을 입력하세요"
-                        className="w-[420px]  ml-2 mb-2 px-2 text-lg text-black border-velogauthgray-400 border rounded"
+                        className="w-[420px]  ml-2 mb-2 px-2 py-1 text-lg text-black border-velogauthgray-400 border rounded"
                     />
                 </div>
 
@@ -175,11 +175,11 @@ export default function mysetting() {
                     />
                     <input
                         placeholder="홈페이지 주소를 입력하세요"
-                        className="w-9/12 ml-2 mb-2 px-2 text-lg text-black border-velogauthgray-400 border rounded"
+                        className="w-[420px] ml-2 mb-2 px-2 py-1 text-lg text-black border-velogauthgray-400 border rounded"
                     />
                 </div>
                 <div className="flex justify-end">
-                    <button className="bg-velogauthgreen-100 ml-2 px-2 hover:opacity-80 rounded text-white">
+                    <button className="bg-velogauthgreen-100 mt-2 ml-2 px-4 py-1 hover:opacity-80 rounded text-white">
                         저장
                     </button>
                 </div>

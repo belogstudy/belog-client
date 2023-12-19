@@ -5,6 +5,7 @@ const initialState = {
     isloginModalOpen: false,
     issignupModalOpen: false,
     isLogined: false,
+    userId: '',
 };
 
 export const auth = createSlice({
@@ -23,10 +24,11 @@ export const auth = createSlice({
         isLogined: (state, action) => {
             state.isLogined = action.payload;
         },
+        userId: (state, action) => {
+            state.userId = action.payload;
+        },
     },
 });
 
-// 로그인 및 회원가입 모달 isOpen 추가
-
-export const { authEmail, isloginModalOpen, issignupModalOpen, isLogined } = auth.actions;
+export const { authEmail, isloginModalOpen, issignupModalOpen, isLogined, userId } = auth.actions;
 export default auth.reducer;
