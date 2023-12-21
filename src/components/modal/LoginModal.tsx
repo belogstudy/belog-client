@@ -77,14 +77,14 @@ transition"
                 <input
                     type="text"
                     placeholder="이메일을 입력하세요"
-                    className="flex-grow border-2 border-velogauthgray-100 p-2 mb-2 "
+                    className="flex-grow border-2 border-velogauthgray-100 p-2 mb-2 text-black "
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 <input
                     type="password"
                     placeholder="비밀번호를 입력하세요"
-                    className="flex-grow border-2 border-velogauthgray-100 p-2 "
+                    className="flex-grow border-2 border-velogauthgray-100 p-2 text-black "
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
