@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdPeopleAlt } from 'react-icons/md';
 import { MySettingLayout } from '@/components/setting/MySettingLayout';
 import { MdEmail } from 'react-icons/md';
@@ -9,6 +9,11 @@ import { FaGithub } from 'react-icons/fa6';
 import { FaTwitter } from 'react-icons/fa';
 import { FaFacebookSquare } from 'react-icons/fa';
 import { MdHome } from 'react-icons/md';
+import { useAuthLogined } from '@/hooks/UseAuthLogined';
+import axios from 'axios';
+import { myAccoutDelete, mySetting } from '@/service/myvelog/myvelog';
+import toast from 'react-hot-toast';
+import { AccoutDeleteModal } from '@/components/modal/AccoutDeleteModal';
 
 export default function mysetting() {
     const [nickEditOn, setNickEditOn] = useState(false);
@@ -16,6 +21,43 @@ export default function mysetting() {
     const [emailEditOn, setEmailEditOn] = useState(false);
     const [acountDeleteOn, setAccountDeleteOn] = useState(false);
     const [socialEditOn, setSocialEditOn] = useState(false);
+
+    const [myInfo, setMyInfo] = useState<mysettingInterface>();
+
+    const authLogin = useAuthLogined();
+
+    console.log('uuid', authLogin.userId);
+    console.log('isLogind', authLogin.isLogined);
+
+    useEffect(() => {
+        const handleMyInfo = async () => {
+            try {
+                const res = await mySetting();
+                console.log(res);
+
+                if (res?.status === 200) {
+                    setMyInfo(res.data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        handleMyInfo();
+    }, []);
+
+    console.log('myInfo', myInfo);
+
+    const handleAccountDelete = () => {
+        try {
+            myAccoutDelete();
+            toast.success('회원탈퇴에 성공했습니다.');
+            authLogin.logout();
+        } catch (error) {
+            console.log(error);
+            toast.error('회원탈퇴에 실패했습니다.');
+        }
+    };
 
     const handleNickEdit = () => {
         setNickEditOn(true);
@@ -29,7 +71,7 @@ export default function mysetting() {
         setEmailEditOn(true);
     };
 
-    const handleAccountDelete = () => {
+    const handleAccountDeleteModalOn = () => {
         setAccountDeleteOn(true);
     };
 
@@ -40,8 +82,12 @@ export default function mysetting() {
     const nickEdit =
         nickEditOn == false ? (
             <div>
-                <p className="font-semibold text-2xl mb-2">닉네임</p>
-                <p className="text-base mb-2 text-velogauthgray-300">소개말</p>
+                <p className="font-semibold text-2xl mb-2 text-black">
+                    {myInfo && myInfo.profileName.length > 0 ? myInfo.profileName : '닉네임'}
+                </p>
+                <p className="text-base mb-2 text-velogauthgray-300">
+                    {myInfo && myInfo.profile.length > 0 ? myInfo.profile : '소개말'}
+                </p>
                 <button
                     onClick={handleNickEdit}
                     className="text-base text-velogauthgreen-100 underline hover:opacity-80"
@@ -68,7 +114,10 @@ export default function mysetting() {
     const velogTitleEdit =
         velogTitleEditOn == false ? (
             <>
-                <p className="text-base">벨로그 제목내용</p>
+                <p className="text-light text-black">
+                    {' '}
+                    {myInfo && myInfo.profile.length > 0 ? myInfo.profileName + '.log' : '벨로그 제목'}
+                </p>
                 <button
                     onClick={handleVelogTitleEdit}
                     className="ml-auto text-velogauthgreen-100 underline hover:opacity-80"
@@ -86,7 +135,7 @@ export default function mysetting() {
     const emailEdit =
         emailEditOn == false ? (
             <>
-                <p className="text-base">이메일</p>
+                <p className="text-light text-black"> {myInfo && myInfo.email.length > 0 ? myInfo.email : '이메일'}</p>
                 <button
                     onClick={handleEmailEdit}
                     className="ml-auto text-velogauthgreen-100 underline hover:opacity-80"
@@ -103,8 +152,11 @@ export default function mysetting() {
 
     const acountDelete = (
         <>
-            <p className="font-semibold text-base mr-5">회원 탈퇴</p>
-            <button className="ml-4 px-4 py-0.5 text-base bg-red-400 rounded text-l text-white hover:opacity-80">
+            <p className="font-semibold text-base mr-5 text-black">회원 탈퇴</p>
+            <button
+                onClick={handleAccountDeleteModalOn}
+                className="ml-4 px-4 py-0.5 text-base bg-red-400 rounded text-l text-white hover:opacity-80"
+            >
                 회원 탈퇴
             </button>
         </>
@@ -188,6 +240,7 @@ export default function mysetting() {
 
     return (
         <>
+            <AccoutDeleteModal />
             <MySettingLayout
                 emailEdit={emailEdit}
                 nickEdit={nickEdit}

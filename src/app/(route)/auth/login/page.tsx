@@ -8,32 +8,27 @@ import { SignUpModal } from '@/components/modal/SignUpModal';
 import { LoginModal } from '@/components/modal/LoginModal';
 import { Toaster } from 'react-hot-toast';
 import { useLoginModal, useSignupModal } from '@/hooks/UseAuthModal';
+import { useAuthLogined } from '@/hooks/UseAuthLogined';
 
 export default function Login() {
     const dispatch = useDispatch();
 
     const authLoginmodal = useLoginModal();
 
-    const authSignupmodal = useSignupModal();
-
-    const checkLogined = useSelector((state: RootState) => state.authReducer.isLogined);
-
     const isOpenLoginModal = useSelector((state: RootState) => state.authReducer.isloginModalOpen);
 
-    const isOpenRegisterModal = useSelector((state: RootState) => state.authReducer.issignupModalOpen);
-
-    console.log(checkLogined);
+    const authLogin = useAuthLogined();
 
     const authToggle = useCallback(() => {
-        if (checkLogined == true) {
+        if (authLogin.isLogined == true) {
             return;
         }
         authLoginmodal.open();
-    }, [checkLogined, isOpenLoginModal]);
+    }, [authLogin.isLogined, isOpenLoginModal]);
     return (
         <div>
             <button onClick={authToggle}>로그인</button>
-            <button onClick={() => dispatch(isLogined(false))}>로그아웃</button>
+            <button onClick={() => sessionStorage.clear()}>로그아웃</button>
             <LoginModal />
             <SignUpModal />
         </div>

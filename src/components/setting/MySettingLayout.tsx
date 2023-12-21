@@ -45,7 +45,7 @@ export const MySettingLayout: React.FC<MySettingLayoutProps> = ({
                     </div>
                     <div className="flex flex-col bg-white mt-10">
                         <div className="flex flex-row p-2">
-                            <p className="font-semibold text-base mr-5">벨로그 제목</p>
+                            <p className="font-semibold text-base mr-5 text-black">벨로그 제목</p>
 
                             {/* 이 붜분 분리 */}
                             {velogTitleEdit}
@@ -56,7 +56,7 @@ export const MySettingLayout: React.FC<MySettingLayoutProps> = ({
                         </p>
 
                         <div className="flex flex-row p-2 mt-2">
-                            <p className="font-semibold text-base mr-5">소셜정보</p>
+                            <p className="font-semibold text-base mr-5 text-black">소셜정보</p>
                             {/* 이 붜분 분리 */}
                             <div className="flex flex-col">{socialEdit}</div>
 
@@ -67,7 +67,7 @@ export const MySettingLayout: React.FC<MySettingLayoutProps> = ({
                         </p>
 
                         <div className="flex flex-row p-2 mt-2">
-                            <p className="font-semibold text-base mr-5">이메일 주소</p>
+                            <p className="font-semibold text-base mr-5 text-black">이메일 주소</p>
                             {/* 이 붜분 분리 */}
                             {emailEdit}
                             {/* 이 붜분 분리 */}

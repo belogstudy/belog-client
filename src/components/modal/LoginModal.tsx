@@ -12,22 +12,23 @@ import { login } from '@/service/auth/register';
 import { AxiosError } from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useLoginModal, useSignupModal } from '@/hooks/UseAuthModal';
+import { useAuthLogined } from '@/hooks/UseAuthLogined';
 
 export const LoginModal = () => {
     const router = useRouter();
 
+    const authLogin = useAuthLogined();
+
     const dispatch = useDispatch();
 
     const checkLogined = useSelector((state: RootState) => state.authReducer.isLogined);
-
-    const authUserId = useSelector((state: RootState) => state.authReducer.userId);
 
     const authLoginmodal = useLoginModal();
 
     const authSignupmodal = useSignupModal();
 
     const authToggle = useCallback(() => {
-        if (checkLogined == true) {
+        if (authLogin.isLogined == true) {
             return;
         }
         authSignupmodal.open();
@@ -55,13 +56,13 @@ transition"
         try {
             const res = await login(body);
             if (res?.status === 200) {
-                dispatch(isLogined(true));
                 dispatch(userId(res.data.userId));
+                sessionStorage.setItem('userId', res.data.userId);
 
                 toast.success('로그인이 완료되었습니다');
                 console.log(res);
                 authLoginmodal.close();
-                // router.push('/');
+                router.push('/');
             }
         } catch (error: any) {
             toast.error(error.data.message);
