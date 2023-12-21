@@ -50,7 +50,7 @@ transition"
             <input
                 type="text"
                 placeholder="이메일을 입력하세요"
-                className="flex-grow border-2 border-velogauthgray-100 p-2 "
+                className="flex-grow border-2 border-velogauthgray-100 p-2 text-black "
                 value={email}
                 onChange={(e) => dispatch(authEmail(e.target.value))}
             />
