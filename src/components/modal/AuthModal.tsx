@@ -4,6 +4,7 @@ import Welcome from '../../../public/images/auth/welcome.svg';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
+import { useAuthLogined } from '@/hooks/UseAuthLogined';
 
 interface AuthModalProps {
     isOpen?: boolean;
@@ -30,10 +31,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     disabled,
     header,
 }) => {
-    const checkLogined = useSelector((state: RootState) => state.authReducer.isLogined);
+    const authLogin = useAuthLogined();
 
     // 로그인 상태시 모달이 열리지 않도록 추가
-    if (!isOpen || checkLogined) return null;
+    if (!isOpen || authLogin.isLogined) return null;
 
     return (
         <>

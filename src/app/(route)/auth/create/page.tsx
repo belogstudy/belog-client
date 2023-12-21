@@ -9,6 +9,7 @@ import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLoginModal, useSignupModal } from '@/hooks/UseAuthModal';
+import { useAuthLogined } from '@/hooks/UseAuthLogined';
 
 export default function Create() {
     const router = useRouter();
@@ -21,6 +22,8 @@ export default function Create() {
     const authLoginmodal = useLoginModal();
 
     const authSignupmodal = useSignupModal();
+
+    const authLogin = useAuthLogined();
 
     const [pActive, setPActive] = useState('');
 
@@ -48,6 +51,11 @@ export default function Create() {
     const [name, setName] = useState('');
     const [intro, setIntro] = useState('');
     const [password, setPassword] = useState('');
+
+    if (authLogin.isLogined || email.length == 0) {
+        toast.error('비정상 접근입니다');
+        router.push('/');
+    }
 
     return (
         <>

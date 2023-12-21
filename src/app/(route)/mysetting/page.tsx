@@ -12,19 +12,24 @@ import { MdHome } from 'react-icons/md';
 import { useAuthLogined } from '@/hooks/UseAuthLogined';
 import axios from 'axios';
 import { myAccoutDelete, mySetting } from '@/service/myvelog/myvelog';
-import toast from 'react-hot-toast';
-import { AccoutDeleteModal } from '@/components/modal/AccoutDeleteModal';
+import toast, { Toaster } from 'react-hot-toast';
+import { useLoginModal } from '@/hooks/UseAuthModal';
+import { LoginModal } from '@/components/modal/LoginModal';
+import { useRouter } from 'next/navigation';
+import { isLogined } from '@/redux/features/auth.slices';
 
 export default function mysetting() {
     const [nickEditOn, setNickEditOn] = useState(false);
     const [velogTitleEditOn, setVelogTitleEditOn] = useState(false);
     const [emailEditOn, setEmailEditOn] = useState(false);
-    const [acountDeleteOn, setAccountDeleteOn] = useState(false);
+    const [accountDeleteOn, setAccountDeleteOn] = useState(false);
     const [socialEditOn, setSocialEditOn] = useState(false);
 
     const [myInfo, setMyInfo] = useState<mysettingInterface>();
 
     const authLogin = useAuthLogined();
+    const AuthLoginModal = useLoginModal();
+    const router = useRouter();
 
     console.log('uuid', authLogin.userId);
     console.log('isLogind', authLogin.isLogined);
@@ -37,12 +42,15 @@ export default function mysetting() {
 
                 if (res?.status === 200) {
                     setMyInfo(res.data);
+                } else {
+                    toast.error('내 정보를 불러오는데 실패했습니다.');
+                    router.push('/');
                 }
             } catch (error) {
                 console.log(error);
+                toast.error('내 정보를 불러오는데 실패했습니다.');
             }
         };
-
         handleMyInfo();
     }, []);
 
@@ -53,6 +61,8 @@ export default function mysetting() {
             myAccoutDelete();
             toast.success('회원탈퇴에 성공했습니다.');
             authLogin.logout();
+            setAccountDeleteOn(false);
+            router.push('/');
         } catch (error) {
             console.log(error);
             toast.error('회원탈퇴에 실패했습니다.');
@@ -78,6 +88,32 @@ export default function mysetting() {
     const handlesetSocialEdit = () => {
         setSocialEditOn(true);
     };
+
+    const deleteOnModal = accountDeleteOn && (
+        <>
+            <div className="fixed inset-0 bg-white bg-opacity-70 z-10" />
+            <div className="fixed inset-0 flex items-center justify-center z-20">
+                <div className="bg-white flex flex-col items-start justify-center shadow-lg sm:w-1/4 md:w-[400px] lg:w-[400px] p-6">
+                    <p className="text-black text-2xl font-bold">회원 탈퇴</p>
+                    <p className="text-black font-light mt-4 mb-4">정말로 탈퇴 하시겠습니까?</p>
+                    <div className="ml-auto">
+                        <button
+                            onClick={() => setAccountDeleteOn(false)}
+                            className="bg-white text-velogauthgreen-100 text-base px-5  p-2 mr-2 hover:opacity-80"
+                        >
+                            취소
+                        </button>
+                        <button
+                            onClick={handleAccountDelete}
+                            className="bg-velogauthgreen-100 rounded text-base px-5 text-white p-1 hover:opacity-80"
+                        >
+                            확인
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 
     const nickEdit =
         nickEditOn == false ? (
@@ -238,9 +274,16 @@ export default function mysetting() {
             </>
         );
 
+    if (authLogin.isLogined === false) {
+        toast.error('로그인이 필요합니다.');
+    }
+
     return (
         <>
-            <AccoutDeleteModal />
+            <Toaster />
+            <LoginModal />
+
+            {deleteOnModal}
             <MySettingLayout
                 emailEdit={emailEdit}
                 nickEdit={nickEdit}
